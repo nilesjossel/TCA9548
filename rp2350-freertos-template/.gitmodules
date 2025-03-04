@@ -1,6 +1,0 @@
-[submodule "lib/FreeRTOS-Kernel"]
-	path = lib/FreeRTOS-Kernel
-	url = https://github.com/raspberrypi/FreeRTOS-Kernel
-[submodule "lib/BNO08x_Pico_Library"]
-	path = lib/BNO08x_Pico_Library
-	url = https://github.com/robotcopper/BNO08x_Pico_Library
