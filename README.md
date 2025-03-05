@@ -18,6 +18,8 @@ Welcome to the Flight Software Team!  In this repo, you will find all of the sof
 ### Getting Started
 Clone this repo. Follow the README within whichever folder you're interested in working on. If you have questions or need help, ask Alex.
 
-### Helpful Background
+### Helpful Background & Links
+* [Raspberry Pi Pico SDK Documentation](https://datasheets.raspberrypi.com/pico/raspberry-pi-pico-c-sdk.pdf)
+* [Raspberry Pi Pico 2W Datasheet](https://datasheets.raspberrypi.com/picow/pico-2-w-datasheet.pdf)
 * Free RTOS on the Pico 1 (rp2040) Videos (Helpful Despite being for old pico)
   * https://youtube.com/playlist?list=PLEB5F4gTNK68zDlrXbcCgJ6NejaP0PvHX&feature=shared
