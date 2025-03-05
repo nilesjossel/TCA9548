@@ -1,9 +1,15 @@
+<p style="font-family:Usual; font-size:3em;text-align:center"> University of Kentucky<br><span style="font-family:Stark; font-size:.75em;text-align:center">Space Systems Laboratory</span></p>  
+
+<br>
+
 # rp2350-freertos-template
+
+## About
 This is a template project for developing FreeRTOS based applications on Raspberry Pi RP2350 based boards. This template uses the "official" RP2350 port from the Raspberry Pi Foundation.
 
 Unmodified, this project will spawn a single task to rapidly blink the LED on and off.
 
-# Getting Started
+## Getting Started
 Import this project into the VS Code raspberry pi pico extension:
 1. Click "Import Project" under the General tab from within the extension.
 2. Select the location of this project
