@@ -1,6 +1,16 @@
-<p style="font-family:Usual; font-size:3em;text-align:center"> University of Kentucky<br><span style="font-family:Stark; font-size:.75em;text-align:center">Space Systems Laboratory</span></p>  
+<div id="toc">
+  <ul align="center" style="list-style: none">
+    <summary>
+      <h1>
+        University of Kentucky
+      </h1>
+     <br>
+     <h2>Space Systems Laboratory</h2>
+    </summary>
+  </ul>
+</div>
 
-<br>
+----
 
 # FemtoSat-Flight-Computer-Software
 
