@@ -19,7 +19,7 @@ Welcome to the Flight Software Team!  In this repo, you will find all of the sof
 Clone this repo. Follow the README within whichever folder you're interested in working on. If you have questions or need help, ask Alex.
 
 ### Helpful Background & Links
+The following links are great places to get started.  If you're new to developing on the Pico 2W, I recommend you start with the SDK Documentation, it has a great guide on how to set up your development environment with a VS Code extension.  If you're new to Real Time Operating Systems (RTOS) or freeRTOS specifically, then the videos in the linked playlist below are a great starting point.
 * [Raspberry Pi Pico SDK Documentation](https://datasheets.raspberrypi.com/pico/raspberry-pi-pico-c-sdk.pdf)
 * [Raspberry Pi Pico 2W Datasheet](https://datasheets.raspberrypi.com/picow/pico-2-w-datasheet.pdf)
-* Free RTOS on the Pico 1 (rp2040) Videos (Helpful Despite being for old pico)
-  * https://youtube.com/playlist?list=PLEB5F4gTNK68zDlrXbcCgJ6NejaP0PvHX&feature=shared
+* [Free RTOS on the Pico 1 (rp2040) Videos](https://youtube.com/playlist?list=PLEB5F4gTNK68zDlrXbcCgJ6NejaP0PvHX&feature=shared): Helpful Despite being for old pico
