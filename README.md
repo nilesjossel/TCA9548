@@ -26,6 +26,7 @@ Welcome to the Flight Software Team!  In this repo, you will find all of the sof
 
 ### Getting Started
 Clone this repo. Follow the README within whichever folder you're interested in working on. If you have questions or need help, ask Alex.
+Note that, if you decide to download a ZIP archive of this repo, any linked external repos (such as those in the lib folders) will not be included and must be downloaded separately.
 
 ### Helpful Background
 * Free RTOS on the Pico 1 (rp2040) Videos (Helpful Despite being for old pico)
