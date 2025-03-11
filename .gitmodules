@@ -7,10 +7,10 @@
 [submodule "FemtoSat-Flight-Computer-Software/lib/RadioLib"]
 	path = FemtoSat-Flight-Computer-Software/lib/RadioLib
 	url = https://github.com/jgromes/RadioLib
-[submodule "FemtoSat-Flight-Computer-Software/lib/FreeRTOS-Kernel"]
-	path = FemtoSat-Flight-Computer-Software/lib/FreeRTOS-Kernel
-	url = https://github.com/raspberrypi/FreeRTOS-Kernel
+	
 [submodule "FemtoSat-Flight-Computer-Software/lib/BNO08x_Pico_Library"]
 	path = FemtoSat-Flight-Computer-Software/lib/BNO08x_Pico_Library
-	url = https://github.com/robotcopper/BNO08x_Pico_Library
-	
+	url = https://github.com/robotcopper/BNO08x_Pico_Library.git
+[submodule "FemtoSat-Flight-Computer-Software/lib/FreeRTOS-Kernel"]
+	path = FemtoSat-Flight-Computer-Software/lib/FreeRTOS-Kernel
+	url = https://github.com/raspberrypi/FreeRTOS-Kernel.git
