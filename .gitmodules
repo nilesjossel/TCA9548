@@ -4,3 +4,6 @@
 [submodule "rp2350-freertos-template/lib/BNO08x_Pico_Library"]
 	path = rp2350-freertos-template/lib/BNO08x_Pico_Library
 	url = https://github.com/robotcopper/BNO08x_Pico_Library
+[submodule "rp2350-freertos-template/lib/TCA9548"]
+    path = rp2350-freertos-template/lib/TCA9548
+    url = https://github.com/RobTillaart/TCA9548

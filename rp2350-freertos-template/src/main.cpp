@@ -4,6 +4,9 @@
 #include "pico/stdlib.h"
 #include "bno08x.h"
 #include "utils.h"
+#include "TCA9548.h"
+#include "SSCSRNN015PA3A3.h"
+
 
 #ifdef CYW43_WL_GPIO_LED_PIN
 #include "pico/cyw43_arch.h"
@@ -52,6 +55,48 @@ void imu_task(void* pvParameters) {
         vTaskDelay(10);
 
     }
+}
+
+void pressuresensor_task(void* pvParameters {
+    i2c_inst_t* i2c_port1;
+    initI2C(i2c_port1, false);
+    TCA9548 tca(i2c_port1);
+    SSCSRNN015PA3A3 pressureSensors[5] = {
+        SSCSRNN015PA3A3(i2c_port1, 0x28),
+        SSCSRNN015PA3A3(i2c_port1, 0x29),
+        SSCSRNN015PA3A3(i2c_port1, 0x2A),
+        SSCSRNN015PA3A3(i2c_port1, 0x2B),
+        SSCSRNN015PA3A3(i2c_port1, 0x2C)
+    };
+
+    float pressures[5] = {0.0f};
+
+    while (true) {
+
+        //Adjust to if statement to check if pressure sensor is connected
+        //i2c address [0x70, 0x77] as output port number (0 to 7)
+        for (int channel = 0; channel < 5; channel++) {
+            tca.selectChannel(channel);
+            
+            pressureSensors[channel].begin(); 
+            pressures[channel] = pressureSensors[channel].readPressure();
+        
+            printf("Channel %d Pressure: %.2f\n", channel, pressures[channel]);
+        }
+
+        vTaskDelay(1000);
+    }
+
+    tca.selectChannel(0);
+
+})
+
+
+void rpi5_task(void* pvParameters) {
+    uart_inst_t* uart_port1;
+    initUART(uart_port1, 1000000, 6, 7);
+    
+    
 }
 
 int main()

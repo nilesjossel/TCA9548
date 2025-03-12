@@ -10,6 +10,7 @@ target_link_libraries(rp2350-freertos-template
     pico_stdlib 
     FreeRTOS-Kernel-Heap4
     BNO08x_Pico_Library
+    TCA9548
     )
 
 if (PICO_CYW43_SUPPORTED)
@@ -18,6 +19,8 @@ if (PICO_CYW43_SUPPORTED)
         pico_stdlib 
         FreeRTOS-Kernel-Heap4
         BNO08x_Pico_Library
+        TCA9548
+        SSCSRNN015PA3A3
     )
 endif()
 
