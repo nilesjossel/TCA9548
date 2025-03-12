@@ -11,6 +11,7 @@ target_link_libraries(rp2350-freertos-template
     FreeRTOS-Kernel-Heap4
     BNO08x_Pico_Library
     TCA9548
+    Honeywell_ABP
     )
 
 if (PICO_CYW43_SUPPORTED)
@@ -20,7 +21,7 @@ if (PICO_CYW43_SUPPORTED)
         FreeRTOS-Kernel-Heap4
         BNO08x_Pico_Library
         TCA9548
-        SSCSRNN015PA3A3
+        Honeywell_ABP
     )
 endif()
 

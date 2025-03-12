@@ -5,7 +5,7 @@
 #include "bno08x.h"
 #include "utils.h"
 #include "TCA9548.h"
-#include "SSCSRNN015PA3A3.h"
+#include "Honeywell_SSC.h"
 
 
 #ifdef CYW43_WL_GPIO_LED_PIN
@@ -60,31 +60,27 @@ void imu_task(void* pvParameters) {
 void pressuresensor_task(void* pvParameters {
     i2c_inst_t* i2c_port1;
     initI2C(i2c_port1, false);
-    TCA9548 tca(i2c_port1);
-    SSCSRNN015PA3A3 pressureSensors[5] = {
-        SSCSRNN015PA3A3(i2c_port1, 0x28),
-        SSCSRNN015PA3A3(i2c_port1, 0x29),
-        SSCSRNN015PA3A3(i2c_port1, 0x2A),
-        SSCSRNN015PA3A3(i2c_port1, 0x2B),
-        SSCSRNN015PA3A3(i2c_port1, 0x2C)
+    TCA9548 tca(i2c_port1, 0x70);         //TCA i2c address [0x70, 0x77] as output port number (0 to 7)
+    Honeywell_SSC pressureSensors[5] = {
+        //Re-assign i2c address for SSC sensors
+        Honeywell_SSC(i2c_port1, 0x28, 0.0, 15.0, "psi"), 
+        Honeywell_SSC(i2c_port1, 0x29, 0.0, 15.0, "psi"),
+        Honeywell_SSC(i2c_port1, 0x2A, 0.0, 15.0, "psi"),
+        Honeywell_SSC(i2c_port1, 0x2B, 0.0, 15.0, "psi"),
+        Honeywell_SSC(i2c_port1, 0x2C, 0.0, 1.6, "bar")  // SSCSRNN1.6BA7A3 sensor
     };
 
     float pressures[5] = {0.0f};
 
     while (true) {
-
-        //Adjust to if statement to check if pressure sensor is connected
-        //i2c address [0x70, 0x77] as output port number (0 to 7)
         for (int channel = 0; channel < 5; channel++) {
             tca.selectChannel(channel);
-            
-            pressureSensors[channel].begin(); 
-            pressures[channel] = pressureSensors[channel].readPressure();
-        
-            printf("Channel %d Pressure: %.2f\n", channel, pressures[channel]);
+            pressureSensor[channel].update();
+            pressures[channel] = pressureSensor[channel].pressure();        
+            printf("Channel %d Pressure: %.2f %s\n", channel, pressures[channel], pressureSensors[channel].unit());
         }
 
-        vTaskDelay(1000);
+        vTaskDelay(50);
     }
 
     tca.selectChannel(0);
@@ -106,6 +102,7 @@ int main()
 
     xTaskCreate(led_task, "LED_Task", 256, NULL, 2, NULL);
     xTaskCreate(imu_task, "IMU_Task", 256, NULL, 1, NULL);
+    xTaskCreate(pressuresensor_task, "PressureSensor_Task", 256, NULL, 1, NULL);
     vTaskStartScheduler();
 
     while(1){};
