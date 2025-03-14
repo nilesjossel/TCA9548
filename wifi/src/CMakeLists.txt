@@ -11,7 +11,6 @@ target_include_directories(rp2350-freertos-template PRIVATE
 target_link_libraries(rp2350-freertos-template 
     pico_stdlib 
     FreeRTOS-Kernel-Heap4
-    BNO08x_Pico_Library
     )
 
 if (PICO_CYW43_SUPPORTED)
@@ -19,7 +18,6 @@ if (PICO_CYW43_SUPPORTED)
         pico_cyw43_arch_none 
         pico_stdlib 
         FreeRTOS-Kernel-Heap4
-        BNO08x_Pico_Library
     )
 endif()
 
