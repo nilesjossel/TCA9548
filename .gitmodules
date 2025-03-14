@@ -4,3 +4,6 @@
 [submodule "rp2350-freertos-template/lib/BNO08x_Pico_Library"]
 	path = rp2350-freertos-template/lib/BNO08x_Pico_Library
 	url = https://github.com/robotcopper/BNO08x_Pico_Library
+[submodule "wifi/lib/FreeRTOS-Kernel"]
+	path = wifi/lib/FreeRTOS-Kernel
+	url = https://github.com/raspberrypi/FreeRTOS-Kernel
