@@ -18,7 +18,7 @@ SET(PICO_PLATFORM rp2350)
 cmake_minimum_required(VERSION 3.13)
 
 # Name project
-#SET(ProjectName rp2350-freertos-template)
+#SET(ProjectName wifi)
 
 # Set any variables required for importing libraries
 SET(FREERTOS_KERNEL_PATH ${CMAKE_CURRENT_SOURCE_DIR}/lib/FreeRTOS-Kernel)
@@ -28,7 +28,7 @@ include(pico_sdk_import.cmake)
 include(${FREERTOS_KERNEL_PATH}/portable/ThirdParty/GCC/RP2350_ARM_NTZ/FreeRTOS_Kernel_import.cmake)
 
 # Define project
-project(rp2350-freertos-template C CXX ASM)
+project(wifi C CXX ASM)
 
 # Define which C++ standard we're using
 set(CMAKE_CXX_STANDARD 17)
