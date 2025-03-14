@@ -61,39 +61,44 @@ void pressuresensor_task(void* pvParameters {
     i2c_inst_t* i2c_port1;
     initI2C(i2c_port1, false);
     TCA9548 tca(i2c_port1, 0x70);         //TCA i2c address [0x70, 0x77] as output port number (0 to 7)
-    Honeywell_SSC pressureSensors[5] = {
-        //Re-assign i2c address for SSC sensors
-        Honeywell_SSC(i2c_port1, 0x28, 0.0, 15.0, "psi"), 
-        Honeywell_SSC(i2c_port1, 0x29, 0.0, 15.0, "psi"),
-        Honeywell_SSC(i2c_port1, 0x2A, 0.0, 15.0, "psi"),
-        Honeywell_SSC(i2c_port1, 0x2B, 0.0, 15.0, "psi"),
-        Honeywell_SSC(i2c_port1, 0x2C, 0.0, 1.6, "bar")  // SSCSRNN1.6BA7A3 sensor
-    };
+    // Honeywell_SSC pressureSensors[5] = {
+    //     //Re-assign i2c address for SSC sensors according the address pin configuration
+    //     Honeywell_SSC(i2c_port1, 0x28, 0.0, 15.0, "psi"), 
+    //     Honeywell_SSC(i2c_port1, 0x28, 0.0, 15.0, "psi"),
+    //     Honeywell_SSC(i2c_port1, 0x28, 0.0, 15.0, "psi"),
+    //     Honeywell_SSC(i2c_port1, 0x28, 0.0, 15.0, "psi"),
+    //     Honeywell_SSC(i2c_port1, 0x28, 0.0, 1.6, "bar")  // SSCSRNN1.6BA7A3 sensor
+    // };
 
-    float pressures[5] = {0.0f};
+    // float pressures[5] = {0.0f};
 
-    while (true) {
-        for (int channel = 0; channel < 5; channel++) {
-            tca.selectChannel(channel);
-            pressureSensor[channel].update();
-            pressures[channel] = pressureSensor[channel].pressure();        
-            printf("Channel %d Pressure: %.2f %s\n", channel, pressures[channel], pressureSensors[channel].unit());
-        }
+    Honeywell_SSC pressureSensors = (i2c_port1, 0x28, 0.0, 15.0, "psi");
+    float pressures = 0.0f;    
 
-        vTaskDelay(50);
-    }
+    // while (true) {
+    //     for (int channel = 0; channel < 5; channel++) {
+    //         tca.selectChannel(channel);
+    //         pressureSensor[channel].update();
+    //         pressures[channel] = pressureSensor[channel].pressure();        
+    //         printf("Channel %d Pressure: %.2f %s\n", channel, pressures[channel], pressureSensors[channel].unit());
+    //     }
+
+    //     vTaskDelay(50);
+    // }
+
+    printf("Pressure: %.2f %s\n", pressures, pressureSensors.unit())
 
     tca.selectChannel(0);
 
 })
 
 
-void rpi5_task(void* pvParameters) {
-    uart_inst_t* uart_port1;
-    initUART(uart_port1, 1000000, 6, 7);
+// void rpi5_task(void* pvParameters) {
+//     uart_inst_t* uart_port1;
+//     initUART(uart_port1, 1000000, 6, 7);
     
     
-}
+// }
 
 int main()
 {
