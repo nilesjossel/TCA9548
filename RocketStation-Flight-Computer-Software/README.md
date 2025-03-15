@@ -12,16 +12,19 @@
 
 ----
 
-# FemtoSat-Flight-Computer-Software
+# RocketStation-Flight-Computer-Software
 
 ## About
 The FemtoSat project is a testbed designed to validate a novel capsule-to-capsule communications scheme designed for the third iteration of the Kentucky Re-Entry Probe Experiment (KREPE3).
+The RocketStation is the main receiving station for the RockSat-XG femtosat network. It will receive and uplink all radio transmissions through the rocket's telemetry system.
+It will also interface with a Raspberry Pi 5 & a camera module, which will take a picture of a KRUPS capsule as it is deployed by the rocket.
 
-The FemtoSats are scaled down versions of the Kentucky Re-entry Universal Payload System (KRUPS) capsules.  They consist of the following:
+The RocketStation is a Raspberry Pi 5 hat with the following components:
 * A Raspberry Pi Pico 2 W (RP2350) acting as the flight computer
-* A LoRa modem (LR62XE) for long range intercapsule communications
+* A LoRa modem (LR62XE) for receiving long range intercapsule communications
 * A temperature/pressure/humidity sensor (BME280)
 * A 9-axis Inertial Measurement Unit (BNO086)
+* A two channel RS-232 level shifter that forwards RocketStation data to the rocket's telemetry pins
 
 The hardware repository is available [here](https://github.com/krups/RockSatX-GHOST-Hardware).
 
@@ -36,5 +39,4 @@ Import this folder as a project into the VS Code Raspberry Pi Pico extension:
 5. Click "Import"
 6. Click "Configuare CMake" under the Project tab from within the extension.
 7. Click Flash Project
-8. Use the debugger to restart the pico by beginning a debugging session. Alternatively, unplug it and plug it back in.
-9. Use a terminal program such as PuTTY to view serial outputs from the pico. See [this](https://datasheets.raspberrypi.com/pico/getting-started-with-pico.pdf) guide; Appendix A, section _Use the UART_.
+8. Use the debugger to restart the pico by beginning a debugging session.
