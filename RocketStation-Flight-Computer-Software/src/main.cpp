@@ -26,21 +26,31 @@ extern "C" {    // extern because drivers are .c files
 #endif
 
 // I2C defines
-#define I2C_PORT i2c0    // i2c port. shared between BME280 & BNO08X
-#define I2C_SDA 8        // gpio pin for i2c SDA
-#define I2C_SCL 9        // gpio pin for i2c SCL
+#define I2C_PORT i2c1           // i2c port. shared between BME280 & BNO08X
+#define I2C_SDA 14        // gpio pin for i2c SDA
+#define I2C_SCL 15        // gpio pin for i2c SCL
 #define I2C_SPEED 400000 // i2c bus speed, 400KHz
 
-// SPI defines. only used for radio
+// LoRa defines. only used for radio
+
+// WARNING: SPI pins on PCB are currently split between SPI0 and SPI1, so using a plain
+// pico SPI controller wont work. 
+// Will need to fix this with some jumper wires that'll connnect GPIO8 to GPIO16 and GPIO9 to GPIO17
+
+// SPI1 pins connected to lora, will be set to high impedance 
+#define PIN_MISO_OLD 8
+#define PIN_CS_OLD 9
+
 #define SPI_PORT spi0
+#define PIN_ANTSW 13
 #define PIN_MISO 16
-#define PIN_MOSI 19
-#define PIN_SCK 18
+#define PIN_MOSI 7
+#define PIN_SCK 6
 #define PIN_CS 17
-#define PIN_DIO1 26
-#define PIN_RST 21
-#define PIN_BUSY 22
-#define PIN_ANTSW 20
+#define PIN_DIO1 10
+#define PIN_RST 12
+#define PIN_BUSY 11
+#define PIN_ADC_TESENSE 26  // will be 2.6V - 3.0V when radio activation connector pin is 28V
 
 // LoRa parameters
 // see https://unsigned.io/understanding-lora-parameters/
@@ -55,13 +65,18 @@ extern "C" {    // extern because drivers are .c files
 #define LORA_TXCO_VOLTAGE       0
 #define LORA_USE_LDO            false
 
-
 // BME280
-#define BME280_ADDR 0x77        // i2c address of the BME280
+#define BME280_ADDR 0x76        // i2c address of the BME280
 
-// LoRa
-static PicoHal myHal(SPI_PORT, PIN_MISO, PIN_MOSI, PIN_SCK);
-static SX1262 radio = SX1262(new Module( & myHal, PIN_CS, PIN_DIO1, PIN_RST, PIN_BUSY));
+// UART pins, goes to/from Pi 5 over 40 pin gpio header
+#define UART_PICO_TO_PI_PIN 0
+#define UART_PI_TO_PICO_PIN 1
+
+// ASYNC pins that transmit to the RS232 level shifter
+// level shifter is then connected to rocket telemetry pins 
+// will probably have to be implemented using PIO, see pio_uart_tx example
+#define ASYNC_TX_1_PIN 4
+#define ASYNC_TX_2_PIN 5
 
 // mutex to stop sensor tasks from 
 // accessing the shared i2c bus at the same time
@@ -80,7 +95,17 @@ void led_task(void* pvParameters)
     }
 }
 
+
+// LoRa
+static PicoHal myHal(SPI_PORT, PIN_MISO, PIN_MOSI, PIN_SCK);
+static SX1262 radio = SX1262(new Module( & myHal, PIN_CS, PIN_DIO1, PIN_RST, PIN_BUSY));
 void lora_task(void* pvParameters) {
+
+    // setting unneeded SPI1 pins to high impedance
+    gpio_set_input_enabled(PIN_MISO_OLD, true);
+    gpio_set_input_enabled(PIN_CS_OLD, true);
+    gpio_disable_pulls(PIN_MISO_OLD);
+    gpio_disable_pulls(PIN_CS_OLD);
 
     // starting LoRa module
     printf("[SX1262] Initializing ...\n");
@@ -118,6 +143,7 @@ void lora_task(void* pvParameters) {
         // nothing rn
     } 
 }
+
 
 void imu_task(void* pvParameters) {
 
@@ -163,7 +189,7 @@ void imu_task(void* pvParameters) {
 
 void bme280_task(void* pvParameters)
 {
-    /*/ Initialize the sensor instance in forced mode
+    /* Initialize the sensor instance in forced mode
 
      Forced mode takes a single measurement before putting 
      the sensor back in sleep mode. For our use-case, this
@@ -244,9 +270,9 @@ int main()
 
     // task creation
     xTaskCreate(led_task, "LED_Task", 256, NULL, 3, NULL);
-    xTaskCreate(imu_task, "IMU_Task", 256, NULL, 1, NULL);
+    // xTaskCreate(imu_task, "IMU_Task", 256, NULL, 1, NULL);       // IMU is non-functional on the rocketstation
     xTaskCreate(bme280_task, "BME280_Task", 256, NULL, 2, NULL);
-    xTaskCreate(lora_task, "LoRa_Task", 256, NULL, 4, NULL);
+    // xTaskCreate(lora_task, "LoRa_Task", 256, NULL, 4, NULL);     // need to run jumpers between GPIO 8 and 16, and GPIO 9 and 17 for this to work
     vTaskStartScheduler();
 
     while(1){};
