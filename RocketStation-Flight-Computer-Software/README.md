@@ -16,7 +16,9 @@
 
 ## About
 The FemtoSat project is a testbed designed to validate a novel capsule-to-capsule communications scheme designed for the third iteration of the Kentucky Re-Entry Probe Experiment (KREPE3).
+
 The RocketStation is the main receiving station for the RockSat-XG femtosat network. It will receive and uplink all radio transmissions through the rocket's telemetry system.
+
 It will also interface with a Raspberry Pi 5 & a camera module, which will take a picture of a KRUPS capsule as it is deployed by the rocket.
 
 The RocketStation is a Raspberry Pi 5 hat with the following components:
