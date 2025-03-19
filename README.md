@@ -1,5 +1,14 @@
-<span style="font-family:Usual; font-size:3em"> University of Kentucky</span>  
-<span style="font-family:Stark; font-size:2em">Space Systems Laboratory</span>
+<div id="toc">
+  <ul align="center" style="list-style: none">
+    <summary>
+      <h1>
+        University of Kentucky
+      </h1>
+     <br>
+     <h2>Space Systems Laboratory</h2>
+    </summary>
+  </ul>
+</div>
 
 ----
 Current as of 4 March 2025
