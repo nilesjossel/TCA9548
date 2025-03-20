@@ -23,6 +23,8 @@ target_link_libraries(rp2350-freertos-template
     BNO08x_Pico_Library
     Pico_BME280_Driver
     RadioLib
+    TCA9548
+    Honeywell_ABP
     )
 
 if (PICO_CYW43_SUPPORTED)

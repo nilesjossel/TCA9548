@@ -15,6 +15,10 @@ extern "C" {    // extern because drivers are .c files
 #include "bme280_driver.h"
 }
 
+// Pressure Sensor
+#include "TCA9548.h"   //MUX
+#include "Honeywell_SSC.h"  //Pressure Sensor
+
 // LoRa
 #include "hardware/spi.h"
 #include "RadioLib.h"
@@ -26,10 +30,14 @@ extern "C" {    // extern because drivers are .c files
 #endif
 
 // I2C defines
-#define I2C_PORT i2c0    // i2c port. shared between BME280 & BNO08X
-#define I2C_SDA 8        // gpio pin for i2c SDA
-#define I2C_SCL 9        // gpio pin for i2c SCL
+#define I2C_PORT0 i2c    // i2c port. shared between BME280 & BNO08X
+#define I2C_SDA0 8        // gpio pin for i2c0 SDA
+#define I2C_SCL0 9        // gpio pin for i2c0 SCL
 #define I2C_SPEED 400000 // i2c bus speed, 400KHz
+
+#define I2C_PORT1 i2c1   // i2c port for pressure sensor
+#define I2C_SDA1 10       // gpio pin for i2c1 SDA
+#define I2C_SCL1 11       // gpio pin for i2c1 SCL
 
 // SPI defines. only used for radio
 #define SPI_PORT spi0
@@ -58,6 +66,10 @@ extern "C" {    // extern because drivers are .c files
 
 // BME280
 #define BME280_ADDR 0x77        // i2c address of the BME280
+
+// Pressure Sensor
+#define TCA_ADDR 0x70           // i2c address of the TCA9548
+#define PRESSURE_SENSOR_ADDR 0x28 // i2c address of the Honeywell SSC
 
 // LoRa
 static PicoHal myHal(SPI_PORT, PIN_MISO, PIN_MOSI, PIN_SCK);
@@ -224,6 +236,41 @@ void bme280_task(void* pvParameters)
     }
 }
 
+void pressuresensor_task(void* pvParameters) {
+    i2c_inst_t* i2c_port1;
+    initI2C(i2c_port1, false);
+    TCA9548 tca(0x70,i2c_port1);         //TCA i2c address [0x70, 0x77] as output port number (0 to 7)
+    // Honeywell_SSC pressureSensors[5] = {
+    //     //Re-assign i2c address for SSC sensors according the address pin configuration
+    //     Honeywell_SSC(i2c_port1, 0x28, 0.0, 15.0, "psi"), 
+    //     Honeywell_SSC(i2c_port1, 0x28, 0.0, 15.0, "psi"),
+    //     Honeywell_SSC(i2c_port1, 0x28, 0.0, 15.0, "psi"),
+    //     Honeywell_SSC(i2c_port1, 0x28, 0.0, 15.0, "psi"),
+    //     Honeywell_SSC(i2c_port1, 0x28, 0.0, 1.6, "bar")  // SSCSRNN1.6BA7A3 sensor
+    // };
+
+    // float pressures[5] = {0.0f};
+
+    Honeywell_SSC pressureSensors = (i2c_port1, 0x28, 0.0, 15.0, "psi");
+    float pressures = 0.0f;    
+
+    // while (true) {
+    //     for (int channel = 0; channel < 5; channel++) {
+    //         tca.selectChannel(channel);
+    //         pressureSensor[channel].update();
+    //         pressures[channel] = pressureSensor[channel].pressure();        
+    //         printf("Channel %d Pressure: %.2f %s\n", channel, pressures[channel], pressureSensors[channel].unit());
+    //     }
+
+    //     vTaskDelay(50);
+    // }
+
+    printf("Pressure: %.2f %s\n", pressures, pressureSensors.unit());
+
+    tca.selectChannel(0);
+
+}
+
 int main()
 {
     stdio_init_all();
@@ -247,6 +294,7 @@ int main()
     xTaskCreate(imu_task, "IMU_Task", 256, NULL, 1, NULL);
     xTaskCreate(bme280_task, "BME280_Task", 256, NULL, 2, NULL);
     xTaskCreate(lora_task, "LoRa_Task", 256, NULL, 4, NULL);
+    xTaskCreate(pressuresensor_task, "PressureSensor_Task", 256, NULL, 5, NULL);
     vTaskStartScheduler();
 
     while(1){};
