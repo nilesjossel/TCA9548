@@ -57,10 +57,10 @@ void imu_task(void* pvParameters) {
     }
 }
 
-void pressuresensor_task(void* pvParameters {
+void pressuresensor_task(void* pvParameters) {
     i2c_inst_t* i2c_port1;
     initI2C(i2c_port1, false);
-    TCA9548 tca(i2c_port1, 0x70);         //TCA i2c address [0x70, 0x77] as output port number (0 to 7)
+    TCA9548 tca(0x70,i2c_port1);         //TCA i2c address [0x70, 0x77] as output port number (0 to 7)
     // Honeywell_SSC pressureSensors[5] = {
     //     //Re-assign i2c address for SSC sensors according the address pin configuration
     //     Honeywell_SSC(i2c_port1, 0x28, 0.0, 15.0, "psi"), 
@@ -86,11 +86,11 @@ void pressuresensor_task(void* pvParameters {
     //     vTaskDelay(50);
     // }
 
-    printf("Pressure: %.2f %s\n", pressures, pressureSensors.unit())
+    printf("Pressure: %.2f %s\n", pressures, pressureSensors.unit());
 
     tca.selectChannel(0);
 
-})
+}
 
 
 // void rpi5_task(void* pvParameters) {

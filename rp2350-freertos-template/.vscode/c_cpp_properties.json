@@ -4,7 +4,11 @@
             "name": "Pico",
             "includePath": [
                 "${workspaceFolder}/**",
-                "${userHome}/.pico-sdk/sdk/2.1.1/**"
+                "${userHome}/.pico-sdk/sdk/2.1.1/**",
+                "${workspaceFolder}/lib/FreeRTOS-Kernel/include",
+                "${workspaceFolder}/lib/FreeRTOS-Kernel/portable/GCC/ARM_CM4F",
+                "${workspaceFolder}/lib/FreeRTOS-Kernel/portable/MemMang",
+                "${workspaceFolder}/lib/TCA9548"
             ],
             "forcedInclude": [
                 "${userHome}/.pico-sdk/sdk/2.1.1/src/common/pico_base_headers/include/pico.h",
