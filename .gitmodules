@@ -16,9 +16,6 @@
 [submodule "FemtoSat-Flight-Computer-Software/lib/FreeRTOS-Kernel"]
 	path = FemtoSat-Flight-Computer-Software/lib/FreeRTOS-Kernel
 	url = https://github.com/raspberrypi/FreeRTOS-Kernel.git
-[submodule "rp2350-freertos-template/lib/TCA9548"]
-    path = rp2350-freertos-template/lib/TCA9548
-    url = https://github.com/nilesjossel/TCA9548.git
 [submodule "rp2350-freertos-template/lib/Honeywell_ABP"]
 	path = rp2350-freertos-template/lib/Honeywell_ABP
 	url = https://github.com/nilesjossel/Honeywell_ABP_SSC.git
@@ -34,3 +31,9 @@
 	path = RocketStation-Flight-Computer-Software/lib/RadioLib
 	url = https://github.com/jgromes/RadioLib.git
 
+[submodule "FemtoSat-Flight-Computer-Software/lib/Honeywell_ABP"]
+	path = FemtoSat-Flight-Computer-Software/lib/Honeywell_ABP
+	url = https://github.com/nilesjossel/Honeywell_ABP_SSC.git
+[submodule "FemtoSat-Flight-Computer-Software/lib/TCA9548"]
+	path = FemtoSat-Flight-Computer-Software/lib/TCA9548
+	url = https://github.com/nilesjossel/TCA9548.git
