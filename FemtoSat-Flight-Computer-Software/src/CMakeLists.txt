@@ -1,12 +1,12 @@
-add_executable(rp2350-freertos-template
+add_executable(FemtoSat-Flight-Computer-Software
     main.cpp
 )
 
-target_include_directories(rp2350-freertos-template PRIVATE
+target_include_directories(FemtoSat-Flight-Computer-Software PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}
 )
 
-target_link_libraries(rp2350-freertos-template 
+target_link_libraries(FemtoSat-Flight-Computer-Software
     pico_stdlib 
     hardware_i2c
     hardware_spi
@@ -28,13 +28,13 @@ target_link_libraries(rp2350-freertos-template
     )
 
 if (PICO_CYW43_SUPPORTED)
-    target_link_libraries(rp2350-freertos-template 
+    target_link_libraries(FemtoSat-Flight-Computer-Software 
         pico_cyw43_arch_none 
     )
 endif()
 
-pico_add_extra_outputs(rp2350-freertos-template)
+pico_add_extra_outputs(FemtoSat-Flight-Computer-Software)
 
 # Modify the below lines to enable/disable console output over UART/USB
-pico_enable_stdio_uart(rp2350-freertos-template 0)
-pico_enable_stdio_usb(rp2350-freertos-template 1)
+pico_enable_stdio_uart(FemtoSat-Flight-Computer-Software 0)
+pico_enable_stdio_usb(FemtoSat-Flight-Computer-Software 1)
