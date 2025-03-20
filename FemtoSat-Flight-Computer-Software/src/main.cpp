@@ -30,7 +30,7 @@ extern "C" {    // extern because drivers are .c files
 #endif
 
 // I2C defines
-#define I2C_PORT0 i2c    // i2c port. shared between BME280 & BNO08X
+#define I2C_PORT0 i2c0    // i2c port. shared between BME280 & BNO08X
 #define I2C_SDA0 8        // gpio pin for i2c0 SDA
 #define I2C_SCL0 9        // gpio pin for i2c0 SCL
 #define I2C_SPEED 400000 // i2c bus speed, 400KHz
@@ -139,7 +139,7 @@ void imu_task(void* pvParameters) {
     if (xSemaphoreTake(I2C_MUTEX, portMAX_DELAY) == pdTRUE){
 
         // will block until imu is initialized successfully
-        if (IMU.begin(CONFIG::BNO08X_ADDR, I2C_PORT)==false) {
+        if (IMU.begin(CONFIG::BNO08X_ADDR, I2C_PORT0)==false) {
             printf("BNO08x not detected at default I2C address. Check wiring.\n");
         }
 
@@ -237,9 +237,9 @@ void bme280_task(void* pvParameters)
 }
 
 void pressuresensor_task(void* pvParameters) {
-    i2c_inst_t* i2c_port1;
+    i2c_inst_t* i2c_port1 = i2c1;
     initI2C(i2c_port1, false);
-    TCA9548 tca(0x70,i2c_port1);         //TCA i2c address [0x70, 0x77] as output port number (0 to 7)
+    TCA9548 tca(TCA_ADDR,I2C_PORT1);         //TCA i2c address [0x70, 0x77] as output port number (0 to 7)
     // Honeywell_SSC pressureSensors[5] = {
     //     //Re-assign i2c address for SSC sensors according the address pin configuration
     //     Honeywell_SSC(i2c_port1, 0x28, 0.0, 15.0, "psi"), 
@@ -280,11 +280,17 @@ int main()
     sleep_ms(5000);
 
     // I2C Initialization
-    i2c_init(I2C_PORT, I2C_SPEED);
-    gpio_set_function(I2C_SDA, GPIO_FUNC_I2C);
-    gpio_set_function(I2C_SCL, GPIO_FUNC_I2C);
-    gpio_pull_up(I2C_SDA);
-    gpio_pull_up(I2C_SCL);
+    i2c_init(I2C_PORT0, I2C_SPEED);
+    gpio_set_function(I2C_SDA0, GPIO_FUNC_I2C);
+    gpio_set_function(I2C_SCL0, GPIO_FUNC_I2C);
+    gpio_pull_up(I2C_SDA0);
+    gpio_pull_up(I2C_SCL0);
+
+    i2c_init(I2C_PORT1, I2C_SPEED);
+    gpio_set_function(I2C_SDA1, GPIO_FUNC_I2C);
+    gpio_set_function(I2C_SCL1, GPIO_FUNC_I2C);
+    gpio_pull_up(I2C_SDA1);
+    gpio_pull_up(I2C_SCL1);
 
     // make i2c mutex
     I2C_MUTEX = xSemaphoreCreateMutex();
