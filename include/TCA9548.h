@@ -1,4 +1,5 @@
-#pragma once
+#ifndef TCA9548_H
+#define TCA9548_H
 //
 //    FILE: TCA9548.h
 //  AUTHOR: Rob Tillaart
@@ -107,4 +108,5 @@ public:
   uint8_t getInterruptMask();
 };
 
+#endif // TCA9548_H
 //  -- END OF FILE --

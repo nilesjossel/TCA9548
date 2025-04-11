@@ -109,7 +109,8 @@ bool TCA9548::setChannelMask(uint8_t mask) {
   _mask = mask;
   int result = i2c_write_blocking(_i2c, _address, &_mask, 1, false);
   if (result < 0) {
-    _error = TCA9548_ERROR_WRITE;
+    //_error = TCA9548_ERROR_WRITE;
+    _error = TCA9548_ERROR_I2C;
     #ifdef DEBUG
     printf("TCA9548: Failed to write channel mask 0x%02X to address 0x%02X.\n", mask, _address);
     #endif
@@ -138,21 +139,6 @@ void TCA9548::reset() {
   #ifdef DEBUG
     printf("TCA9548: Reset pin toggled.\n");
   #endif
-}
-
-bool TCA9548::disableAllChannels() {
-  _mask = 0;
-  if (!setChannelMask(_mask)) {
-    #ifdef DEBUG
-    printf("TCA9548: Failed to disable all channels.\n");
-    #endif
-    return false;
-  }
-
-  #ifdef DEBUG
-  printf("TCA9548: All channels disabled.\n");
-  #endif
-  return true;
 }
 
 void TCA9548::setForced(bool forced) {
