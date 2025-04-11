@@ -11,7 +11,7 @@
 
 # TCA9548
 
-Arduino Library for TCA9548 I2C multiplexer and compatibles.
+Raspberyy Pi Pico Library for TCA9548 I2C multiplexer and compatibles.
 
 
 ## Description
